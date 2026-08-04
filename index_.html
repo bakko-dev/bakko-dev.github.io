@@ -84,9 +84,6 @@
   .hero{padding:130px 0 118px;text-align:center}
   .hero h1{font-size:clamp(40px,6.4vw,68px);font-weight:900;max-width:820px;margin:0 auto 26px}
   .hero h1 .hl{background:var(--blue);color:#fff;padding:2px 14px 6px;border-radius:8px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-  .mp-phrase{display:inline-block}
-  .mp-logos{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px auto 30px}
-  .mp-logo{display:block;object-fit:cover;flex:0 0 auto;border-radius:22%;box-shadow:0 4px 14px rgba(0,0,0,.12)}
   .hero p{color:var(--muted);font-size:14.5px;max-width:440px;margin:0 auto 34px}
   .hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
@@ -369,12 +366,7 @@
 <!-- ================= HERO ================= -->
 <header class="hero">
 <div class="wrap">
-<h1>Увеличьте продажи на <span class="mp-phrase" id="mpPhrase"><span class="hl">Маркетплейсах</span>.</span></h1>
-<div class="mp-logos" id="mpLogos">
-<img alt="Wildberries" class="mp-logo" src="images/wb.jpeg"/>
-<img alt="Ozon" class="mp-logo" src="images/ozon.jpg"/>
-<img alt="Яндекс Маркет" class="mp-logo" src="images/yandex.png"/>
-</div>
+<h1>Увеличьте продажи на <span class="hl">Маркетплейсах</span>.</h1>
 <p>Aurora ускоряет обновление карточек товаров, оптимизирует SEO и создает продающую инфографику для роста вашей прибыли.</p>
 <div class="hero-actions">
 <a class="btn btn-blue" href="https://t.me/bakytkh">Написать в Telegram</a>
@@ -788,36 +780,6 @@
     if (img.complete && img.naturalWidth === 0) apply();
     else img.addEventListener('error', apply, { once: true });
   });
-
-  /* ============ MARKETPLACE LOGOS: fit row width to "Маркетплейсах." phrase ============ */
-  (function () {
-    const phrase = document.getElementById('mpPhrase');
-    const row = document.getElementById('mpLogos');
-    if (!phrase || !row) return;
-    const logos = Array.from(row.querySelectorAll('.mp-logo'));
-    // natural aspect ratios (width / height) of each source image
-    const ratios = [1, 300 / 216, 1]; // wb, ozon, yandex
-    const gap = 10; // must match CSS gap
-    function sizeLogos() {
-      const targetWidth = phrase.getBoundingClientRect().width;
-      if (!targetWidth) return;
-      const ratioSum = ratios.reduce((a, b) => a + b, 0);
-      const totalGap = gap * (logos.length - 1);
-      let h = (targetWidth - totalGap) / ratioSum;
-      h = Math.max(h, 0);
-      logos.forEach((img, i) => {
-        img.style.height = h + 'px';
-        img.style.width = (h * ratios[i]) + 'px';
-      });
-      row.style.width = targetWidth + 'px';
-    }
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(sizeLogos);
-    }
-    window.addEventListener('load', sizeLogos);
-    window.addEventListener('resize', sizeLogos);
-    sizeLogos();
-  })();
 </script>
 </body>
 </html>
