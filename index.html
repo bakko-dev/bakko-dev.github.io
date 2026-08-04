@@ -42,7 +42,7 @@
   a{text-decoration:none;color:inherit}
   ul{list-style:none}
   button{font-family:inherit}
-  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
   section{padding:88px 0;position:relative}
 
   .label{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
@@ -102,6 +102,10 @@
   .demo-carousel-wrapper {
     position: relative;
     margin-top: 36px;
+    padding: 0 52px;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .demo-carousel-container {
     overflow: hidden;
@@ -112,40 +116,67 @@
     display: flex;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     will-change: transform;
+    width: 100%;
   }
   .demo-item {
     min-width: 100%;
+    width: 100%;
     box-sizing: border-box;
     display: grid;
-    grid-template-columns:.92fr 1.08fr;
-    gap: 22px;
-    align-items: stretch;
+    grid-template-columns: 360px minmax(0, 1fr);
+    gap: 32px;
+    align-items: center;
     flex-shrink: 0;
+    padding: 4px;
   }
-  .demo-item.flip .demo-media{order:2}
-  .demo-media{background:#e7e4dc;border-radius:var(--r);overflow:hidden;min-height:320px}
+  .demo-item:nth-child(even) {
+    grid-template-columns: minmax(0, 1fr) 360px;
+  }
+  .demo-item:nth-child(even) .demo-media {
+    order: 2;
+  }
+  .demo-item:nth-child(even) .demo-panel {
+    order: 1;
+  }
+
+  .demo-media{
+    background:#e7e4dc;
+    border-radius:var(--r);
+    overflow:hidden;
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+  }
   .demo-media img{width:100%;height:100%;object-fit:cover;border-radius:var(--r);box-shadow:0 18px 44px rgba(0,0,0,.14)}
-  .demo-panel{background:var(--panel);border:1px solid rgba(0,0,0,.04);border-radius:var(--r);padding:26px 28px}
+  
+  .demo-panel{
+    background:var(--panel);
+    border:1px solid rgba(0,0,0,.04);
+    border-radius:var(--r);
+    padding:28px 32px;
+    width: 100%;
+    min-width: 0;
+  }
   .demo-meta{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
   .demo-panel h3{font-size:19px;font-weight:800;margin-bottom:18px}
   .ba{border-radius:10px;padding:12px 14px;margin-bottom:10px}
   .ba .tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
-  .ba p{font-size:13px;font-weight:600;color:#3c3b37}
+  .ba p{font-size:13px;font-weight:600;color:#3c3b37;word-break:break-word}
   .ba.before{background:var(--red-soft)} .ba.before .tag{color:var(--red)}
   .ba.after{background:var(--green-soft)} .ba.after .tag{color:var(--green)}
   .demo-list{margin-top:16px;display:grid;gap:9px}
-  .demo-list li{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--muted)}
+  .demo-list li{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--muted);word-break:break-word}
   .demo-list li svg{flex:0 0 auto;width:15px;height:15px;margin-top:1px;color:var(--blue)}
   .demo-list li.pill{display:inline-flex;align-items:center;gap:8px;background:#111;color:#fff;border-radius:999px;padding:9px 15px;font-weight:600;font-size:12px;justify-self:start}
   .demo-list li.pill svg{color:#7bffa8;margin:0}
 
-  /* Carousel Navigation Buttons & Dots */
   .demo-nav-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: #fff;
     border: 1px solid rgba(0,0,0,0.08);
@@ -162,9 +193,9 @@
     color: #fff;
     border-color: #111;
   }
-  .demo-prev { left: -24px; }
-  .demo-next { right: -24px; }
-  .demo-nav-btn svg { width: 20px; height: 20px; }
+  .demo-prev { left: 0px; }
+  .demo-next { right: 0px; }
+  .demo-nav-btn svg { width: 18px; height: 18px; }
 
   .demo-dots {
     display: flex;
@@ -277,9 +308,12 @@
     body.menu-open .burger span:nth-child(2){opacity:0}
     body.menu-open .burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
     .burger{display:block}
-    .demo-item{grid-template-columns:1fr}
-    .demo-media{min-height:0;aspect-ratio:1}
-    .demo-nav-btn { display: none; } /* Hide side arrows on small screens, let users swipe/use dots */
+    .demo-carousel-wrapper{padding:0 12px;}
+    .demo-item, .demo-item:nth-child(even){grid-template-columns:1fr;max-width:480px;margin:0 auto;}
+    .demo-item:nth-child(even) .demo-media { order: initial; }
+    .demo-item:nth-child(even) .demo-panel { order: initial; }
+    .demo-media{max-width:100%}
+    .demo-nav-btn { display: none; }
   }
   @media(max-width:560px){
     section{padding:64px 0}
@@ -380,7 +414,6 @@
 <h2>Разборы карточек. <span class="gray">Что находим и как переделываем.</span></h2>
 <p class="sub">Три реальных примера: слабый заголовок, пустые характеристики и визуал без УТП — и что мы с этим сделали.</p>
 
-
 <div class="demo-carousel-wrapper">
   <button class="demo-nav-btn demo-prev" aria-label="Предыдущий слайд">
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg>
@@ -408,7 +441,7 @@
         </div>
       </div>
       <!-- Demo 2 -->
-      <div class="demo-item flip">
+      <div class="demo-item">
         <div class="demo-media"><img alt="Городской рюкзак ToFi 16 л — инфографика" data-fallback="backpack" src="images/347111102.jpg"/></div>
         <div class="demo-panel">
           <div class="demo-meta">Аксессуары · арт. 347111102</div>
@@ -580,7 +613,7 @@
 <div class="faq-a"><p>Нет. Мы работаем с открытыми карточками по артикулу — доступ к личному кабинету не требуется. Если понадобится загрузка через API WB (для крупных объёмов), обсуждаем это отдельно.</p></div>
 </div>
 <div class="faq-item">
-<button class="faq-q">Как быстро вы обрабатываете партию карточек?<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg></button>
+<button class="faq-q">Как быстро вы обрабатываете партию карточек?<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg></button>
 <div class="faq-a"><p>Партию до 200 карточек конвейер обрабатывает за 24–48 часов. Точный срок зависит от объёма и сложности ниши — сообщим при разборе заявки.</p></div>
 </div>
 <div class="faq-item">
@@ -678,7 +711,6 @@
   const dotsContainer = document.getElementById('demoDots');
   let currentIndex = 0;
 
-  // Create dots dynamically based on number of demo cards
   items.forEach((_, index) => {
     const dot = document.createElement('button');
     dot.classList.add('demo-dot');
